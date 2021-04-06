@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -15,10 +17,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    private BeerExpert expert = new BeerExpert();
+
     public void onClickFindBeer(View view){
+
         TextView brands = (TextView) findViewById(R.id.brands);
         Spinner color = (Spinner) findViewById(R.id.color);
-
-        brands.setText(String.valueOf(color.getSelectedItem()));
+        String color_string = String.valueOf(color.getSelectedItem());
+        List<String> brandsList = expert.getBrands(color_string);
+        StringBuilder brandsFormatted = new StringBuilder();
+        for (String brand: brandsList){
+            brandsFormatted.append(brand).append('\n');
+        }
+        brands.setText(brandsFormatted);
     }
 }
